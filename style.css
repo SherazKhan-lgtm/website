@@ -316,6 +316,16 @@ padding:25px;
 
 }
 
+  .facebook{
+background:#1877f2;
+box-shadow:0 0 15px #1877f2;
+}
+
+.youtube{
+background:#ff0000;
+box-shadow:0 0 15px #ff0000;
+}
+
 
 .profile{
 
