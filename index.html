@@ -1,211 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="style.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sheraz Downloader</title>
 
-<title>Sheraz Downloader | Official Website</title>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
 
-<link rel="stylesheet" href="style.css">
+body{
+background:#050510;
+color:white;
+text-align:center;
+overflow-x:hidden;
+}
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+body::before{
+content:'';
+position:fixed;
+width:100%;
+height:100%;
+background:radial-gradient(circle,#0d47a1,#050510);
+z-index:-1;
+animation:bg 8s infinite alternate;
+}
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+@keyframes bg{
+0%{filter:hue-rotate(0deg);}
+100%{filter:hue-rotate(90deg);}
+}
+
+.container{
+max-width:450px;
+margin:auto;
+padding:30px;
+}
+
+.profile{
+width:140px;
+height:140px;
+border-radius:50%;
+border:4px solid #00e5ff;
+box-shadow:0 0 30px #00e5ff;
+margin:auto;
+object-fit:cover;
+}
+
+h1{
+margin-top:15px;
+font-size:32px;
+color:#00e5ff;
+}
+
+p{
+margin:10px 0 30px;
+color:#ddd;
+}
+
+.btn{
+display:block;
+text-decoration:none;
+background:#00e5ff;
+color:black;
+padding:15px;
+margin:12px 0;
+border-radius:12px;
+font-weight:bold;
+transition:.3s;
+}
+
+.btn:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px #00e5ff;
+}
+
+.footer{
+margin-top:40px;
+font-size:14px;
+color:#aaa;
+}
+</style>
 
 </head>
-
 <body>
 
-<!-- Welcome Screen -->
-<div id="loader">
-
-<div class="loader-content">
-
-<img src="profile.jpg" class="loader-img">
-
-<h1>Welcome</h1>
-
-<p>Sheraz Downloader</p>
-
-<div class="loading-bar">
-<div class="loading"></div>
-</div>
-
-</div>
-
-</div>
-
-<!-- Animated Background -->
-
-<div class="bg-animation">
-
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-
-</div>
-
-<!-- Hero -->
-
-<section class="hero">
-
-<div class="glass">
+<div class="container">
 
 <img src="profile.jpg" class="profile">
 
 <h1>Sheraz Downloader</h1>
-
-<div class="typing">
-<span id="typing"></span>
-</div>
-
-<p>
-
-Official Website of Sheraz Khan
-
-Premium Video Downloader
-
-Fast • Secure • Free
-
-</p>
-
-<div class="social-icons">
-
-<a href="https://www.tiktok.com/@mr__sheraz1" target="_blank">
-<i class="fab fa-tiktok"></i>
+  <a href="https://wa.me/923441616216" class="btn" target="_blank">
+💬 WhatsApp
 </a>
 
-<a href="https://www.facebook.com/" target="_blank">
-<i class="fab fa-facebook"></i>
+<a href="mailto:alone.heart706@gmail.com" class="btn">
+📧 Email
 </a>
 
-<a href="https://youtube.com/" target="_blank">
-<i class="fab fa-youtube"></i>
+<a href="https://www.tiktok.com/@mr__sheraz1" class="btn" target="_blank">
+🎵 TikTok
 </a>
 
-<a href="https://wa.me/923000000000" target="_blank">
-<i class="fab fa-whatsapp"></i>
+<a href="https://www.facebook.com/its.sharry.Khan" class="btn" target="_blank">
+📘 Facebook
 </a>
 
-<a href="mailto:your@email.com">
-<i class="fa-solid fa-envelope"></i>
+<a href="https://www.youtube.com/@sharrykhan3527" class="btn" target="_blank">
+▶️ YouTube
 </a>
 
-<a href="tel:+923000000000">
-<i class="fa-solid fa-phone"></i>
-</a>
-
+<div class="footer">
+© 2026 Sheraz Downloader<br>
+Made with ❤️ by Sheraz Khan
 </div>
 
 </div>
-  <section class="downloads">
 
-<h2>Popular Download Tools</h2>
-
-</section>
-
-<!-- Download Section -->
-
-<section class="downloads">
-
-<h2>Popular Download Tools</h2>
-  </body>
-</html>
-  <!-- Gallery Section -->
-
-<section class="gallery">
-
-<h2>My Gallery</h2>
-
-<div class="gallery-box">
-
-<img src="gallery1.jpg" alt="Sheraz Gallery">
-
-<img src="gallery2.jpg" alt="Sheraz Gallery">
-
-<img src="gallery3.jpg" alt="Sheraz Gallery">
-
-</div>
-
-</section>
-
-
-<!-- Visitor Section -->
-
-<section class="visitor">
-
-<div class="visitor-card">
-
-<i class="fa-solid fa-users"></i>
-
-<h3>Website Visitors</h3>
-
-<h1 id="visitorCount">0</h1>
-
-<p>
-Thank you for visiting Sheraz Downloader
-</p>
-
-</div>
-
-</section>
-
-
-<!-- About Section -->
-
-<section class="about">
-
-<h2>About Sheraz Khan</h2>
-
-<p>
-Welcome to the official website of Sheraz Khan.
-Here you can find video downloader tools, apps and useful services.
-</p>
-
-</section>
-
-
-<!-- Footer -->
-
-<footer>
-
-<h3>Sheraz Downloader</h3>
-
-<p>
-© 2026 All Rights Reserved
-</p>
-
-<div class="footer-social">
-
-<a href="https://www.tiktok.com/@mr__sheraz1">
-<i class="fab fa-tiktok"></i>
-</a>
-
-<a href="#">
-<i class="fab fa-youtube"></i>
-</a>
-
-<a href="#">
-<i class="fab fa-facebook"></i>
-</a>
-
-<a href="#">
-<i class="fab fa-whatsapp"></i>
-</a>
-
-</div>
-
-</footer>
-
-<script src="script.js"></script>
 </body>
-
 </html>
+
+<p>
