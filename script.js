@@ -1,86 +1,127 @@
-document.addEventListener("DOMContentLoaded", function () {
+/* ==========================
+   SHERAZ KHAN WEBSITE SCRIPT
+========================== */
 
-document.body.style.opacity="0";
+
+/* Welcome Animation */
+
+window.addEventListener("load", function(){
+
+let welcome = document.getElementById("welcome");
+
+if(welcome){
 
 setTimeout(function(){
-document.body.style.transition="1s";
-document.body.style.opacity="1";
-},100);
 
-const buttons=document.querySelectorAll(".btn");
+welcome.style.opacity = "0";
 
-buttons.forEach(function(btn){
+setTimeout(function(){
 
-btn.addEventListener("mouseenter",function(){
+welcome.style.display = "none";
 
-this.style.transform="scale(1.05)";
-this.style.boxShadow="0 0 25px #00e5ff";
+},1000);
 
-});
+},3000);
 
-btn.addEventListener("mouseleave",function(){
-
-this.style.transform="scale(1)";
-this.style.boxShadow="0 0 15px rgba(0,229,255,.5)";
+}
 
 });
 
-});
 
-const profile=document.querySelector(".profile");
 
-let glow=true;
+/* Visitor Counter */
 
-setInterval(function(){
+let count = localStorage.getItem("websiteVisitors");
 
-if(profile){
+if(!count){
 
-if(glow){
-
-profile.style.boxShadow="0 0 40px #00e5ff";
+count = 1;
 
 }else{
 
-profile.style.boxShadow="0 0 15px #00e5ff";
+count++;
 
 }
 
-glow=!glow;
+localStorage.setItem("websiteVisitors", count);
+
+
+let visitorElement = document.getElementById("visitorCount");
+
+if(visitorElement){
+
+visitorElement.innerHTML = count;
 
 }
 
-},1000);
-  const title=document.querySelector("h1");
 
-const colors=[
-"#00e5ff",
-"#00ff99",
-"#ffeb3b",
-"#ff4081",
-"#ffffff"
-];
 
-let i=0;
+/* Online Users Random Effect */
+
+let onlineElement = document.getElementById("onlineCount");
+
+if(onlineElement){
 
 setInterval(function(){
 
-if(title){
+let users = Math.floor(Math.random()*10)+1;
 
-title.style.color=colors[i];
+onlineElement.innerHTML = users;
 
-i++;
-
-if(i>=colors.length){
-
-i=0;
+},5000);
 
 }
 
-}
 
-},1500);
 
-console.log("Sheraz Downloader Loaded Successfully");
+/* Smooth Button Animation */
+
+const buttons = document.querySelectorAll(".btn, .download-btn, .tool-btn");
+
+
+buttons.forEach(function(button){
+
+button.addEventListener("mouseenter",function(){
+
+button.style.transform="scale(1.08)";
 
 });
-  
+
+
+button.addEventListener("mouseleave",function(){
+
+button.style.transform="scale(1)";
+
+});
+
+
+});
+
+
+
+/* Image Loading Effect */
+
+const images = document.querySelectorAll("img");
+
+
+images.forEach(function(img){
+
+img.addEventListener("load",function(){
+
+img.style.opacity="1";
+
+});
+
+});
+
+
+
+/* Current Year Footer */
+
+let year = document.querySelector("footer");
+
+if(year){
+
+year.innerHTML += "<br>© "+new Date().getFullYear()+" Sheraz Khan";
+
+}
