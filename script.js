@@ -1,64 +1,76 @@
+document.addEventListener("DOMContentLoaded", function () {
 
-/* Welcome Loader */
+document.body.style.opacity="0";
 
-window.addEventListener("load",()=>{
+setTimeout(function(){
+document.body.style.transition="1s";
+document.body.style.opacity="1";
+},100);
 
-setTimeout(()=>{
+const buttons=document.querySelectorAll(".btn");
 
-document.getElementById("loader").style.display="none";
+buttons.forEach(function(btn){
 
-},3000);
+btn.addEventListener("mouseenter",function(){
+
+this.style.transform="scale(1.05)";
+this.style.boxShadow="0 0 25px #00e5ff";
 
 });
 
+btn.addEventListener("mouseleave",function(){
 
-/* Typing Animation */
+this.style.transform="scale(1)";
+this.style.boxShadow="0 0 15px rgba(0,229,255,.5)";
 
-const text = [
-"Sheraz Downloader",
-"TikTok Video Downloader",
-"Fast & Secure Tools",
-"Official Website"
+});
+
+});
+
+const profile=document.querySelector(".profile");
+
+let glow=true;
+
+setInterval(function(){
+
+if(profile){
+
+if(glow){
+
+profile.style.boxShadow="0 0 40px #00e5ff";
+
+}else{
+
+profile.style.boxShadow="0 0 15px #00e5ff";
+
+}
+
+glow=!glow;
+
+}
+
+},1000);
+  const title=document.querySelector("h1");
+
+const colors=[
+"#00e5ff",
+"#00ff99",
+"#ffeb3b",
+"#ff4081",
+"#ffffff"
 ];
 
 let i=0;
-let j=0;
-let current="";
-let deleting=false;
 
-function typing(){
+setInterval(function(){
 
-current=text[i];
+if(title){
 
-if(!deleting){
-
-document.getElementById("typing").innerHTML=
-current.substring(0,j++);
-
-if(j>current.length){
-
-deleting=true;
-
-setTimeout(typing,1000);
-
-return;
-
-}
-
-}
-
-else{
-
-document.getElementById("typing").innerHTML=
-current.substring(0,j--);
-
-if(j<0){
-
-deleting=false;
+title.style.color=colors[i];
 
 i++;
 
-if(i>=text.length){
+if(i>=colors.length){
 
 i=0;
 
@@ -66,53 +78,9 @@ i=0;
 
 }
 
-}
+},1500);
 
-setTimeout(typing,100);
-
-}
-
-typing();
-
-
-
-/* Visitor Counter */
-
-let count=0;
-
-let target=12543;
-
-let counter=document.getElementById("visitorCount");
-
-
-let interval=setInterval(()=>{
-
-count+=Math.ceil(target/100);
-
-if(count>=target){
-
-count=target;
-
-clearInterval(interval);
-
-}
-
-if(counter){
-
-counter.innerHTML=count.toLocaleString();
-
-}
-
-},30);
-
-
-
-/* Smooth Scroll */
-
-document.querySelectorAll("a").forEach(link=>{
-
-link.addEventListener("click",function(){
+console.log("Sheraz Downloader Loaded Successfully");
 
 });
-
-});
+  
