@@ -1,127 +1,189 @@
-/* ==========================
-   SHERAZ KHAN WEBSITE SCRIPT
-========================== */
+/*==========================================
+ SHERAZ KHAN OFFICIAL
+ Premium JavaScript
+==========================================*/
 
+// ===============================
+// Loader Animation
+// ===============================
 
-/* Welcome Animation */
+window.addEventListener("load", () => {
 
-window.addEventListener("load", function(){
+    setTimeout(() => {
 
-let welcome = document.getElementById("welcome");
+        const loader = document.getElementById("loader");
 
-if(welcome){
+        loader.style.opacity = "0";
+        loader.style.visibility = "hidden";
 
-setTimeout(function(){
+    }, 3000);
 
-welcome.style.opacity = "0";
+});
 
-setTimeout(function(){
+// ===============================
+// Back To Top Button
+// ===============================
 
-welcome.style.display = "none";
+const topBtn = document.getElementById("topBtn");
 
-},1000);
+window.addEventListener("scroll", () => {
 
-},3000);
+    if (window.scrollY > 300) {
+
+        topBtn.style.display = "block";
+
+    } else {
+
+        topBtn.style.display = "none";
+
+    }
+
+});
+
+topBtn.onclick = () => {
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+};
+
+// ===============================
+// Animated Counter
+// ===============================
+
+const counters = document.querySelectorAll(".card h2");
+
+counters.forEach(counter => {
+
+    const updateCounter = () => {
+
+        const
+           /*==========================================
+  SHERAZ KHAN OFFICIAL
+  Premium Effects
+==========================================*/
+
+// ===============================
+// Smooth Scroll for Navigation
+// ===============================
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+
+    link.addEventListener("click", function(e) {
+
+        e.preventDefault();
+
+        const target = document.querySelector(this.getAttribute("href"));
+
+        if (target) {
+
+            target.scrollIntoView({
+
+                behavior: "smooth"
+
+            });
+
+        }
+
+    });
+
+});
+
+// ===============================
+// Gallery Hover Animation
+// ===============================
+
+document.querySelectorAll(".gallery-item").forEach(item => {
+
+    item.addEventListener("mouseenter", () => {
+
+        item.style.transform = "scale(1.03)";
+        item.style.transition = ".4s";
+
+    });
+
+    item.addEventListener("mouseleave", () => {
+
+        item.style.transform = "scale(1)";
+
+    });
+
+});
+
+// ===============================
+// Floating Particles
+// ===============================
+
+const particles = document.getElementById("particles");
+
+if (particles) {
+
+    for (let i = 0; i < 60; i++) {
+
+        const dot = document.createElement("span");
+
+        dot.className = "particle";
+
+        dot.style.left = Math.random() * 100 + "%";
+        dot.style.top = Math.random() * 100 + "%";
+        dot.style.animationDuration = (4 + Math.random() * 6) + "s";
+        dot.style.animationDelay = Math.random() * 5 + "s";
+
+        particles.appendChild(dot);
+
+    }
 
 }
 
-});
+// ===============================
+// Download Button Effect
+// ===============================
 
+const downloadBtn = document.querySelector(".download-btn");
 
+if (downloadBtn) {
 
-/* Visitor Counter */
+    downloadBtn.addEventListener("click", () => {
 
-let count = localStorage.getItem("websiteVisitors");
+        downloadBtn.innerHTML =
+        '<i class="fa-solid fa-circle-check"></i> Download Started';
 
-if(!count){
+        setTimeout(() => {
 
-count = 1;
+            downloadBtn.innerHTML =
+            '<i class="fa-solid fa-download"></i> Download Now';
 
-}else{
+        }, 3000);
 
-count++;
-
-}
-
-localStorage.setItem("websiteVisitors", count);
-
-
-let visitorElement = document.getElementById("visitorCount");
-
-if(visitorElement){
-
-visitorElement.innerHTML = count;
+    });
 
 }
 
+// ===============================
+// Footer Year
+// ===============================
 
+const year = new Date().getFullYear();
 
-/* Online Users Random Effect */
+const copy = document.querySelector(".copyright");
 
-let onlineElement = document.getElementById("onlineCount");
+if (copy) {
 
-if(onlineElement){
-
-setInterval(function(){
-
-let users = Math.floor(Math.random()*10)+1;
-
-onlineElement.innerHTML = users;
-
-},5000);
+    copy.innerHTML =
+    "© " + year + " Sheraz Khan Official. All Rights Reserved.";
 
 }
 
+// ===============================
+// Console Message
+// ===============================
 
+console.log("%cSheraz Khan Official",
+"color:#00e5ff;font-size:24px;font-weight:bold;");
 
-/* Smooth Button Animation */
-
-const buttons = document.querySelectorAll(".btn, .download-btn, .tool-btn");
-
-
-buttons.forEach(function(button){
-
-button.addEventListener("mouseenter",function(){
-
-button.style.transform="scale(1.08)";
-
-});
-
-
-button.addEventListener("mouseleave",function(){
-
-button.style.transform="scale(1)";
-
-});
-
-
-});
-
-
-
-/* Image Loading Effect */
-
-const images = document.querySelectorAll("img");
-
-
-images.forEach(function(img){
-
-img.addEventListener("load",function(){
-
-img.style.opacity="1";
-
-});
-
-});
-
-
-
-/* Current Year Footer */
-
-let year = document.querySelector("footer");
-
-if(year){
-
-year.innerHTML += "<br>© "+new Date().getFullYear()+" Sheraz Khan";
-
-}
+console.log("Premium Website Loaded Successfully.");
