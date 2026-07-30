@@ -549,49 +549,8 @@
         <!-- 3. DOWNLOADERS SECTION -->  
         <h2 class="section-title">Video Downloaders & Apps</h2>  
         <div class="glass-card">  
-            <div class="tools-grid">  
-                  
-                <!-- Blackhole App Direct Download -->  
-                <div class="tool-card">  
-                    <div>
-                        <i class="fas fa-circle-down main-icon"></i>  
-                        <h3>Blackhole All Downloader</h3>  
-                        <p>Download videos from any social media platform directly from our server.</p>  
-                    </div>
-                    <a href="BlackHole.apk" download class="btn-action">  
-                        <i class="fas fa-download"></i> Download APK  
-                    </a>  
-                </div>  
-
-                <!-- Instagram Video Downloader App -->  
-                <div class="tool-card">  
-                    <div>
-                        <i class="fab fa-instagram main-icon"></i>  
-                        <h3>Instagram Video Downloader</h3>  
-                        <p>Download Reels, Photos & IGTV videos via App or FastDL online tool.</p>  
-                    </div>
-                    <div>
-                        <a href="Instagram.apk" download class="btn-action">  
-                            <i class="fas fa-download"></i> Download App  
-                        </a>  
-                        <a href="https://fastdl.app/en4" target="_blank" class="btn-action btn-secondary">  
-                            <i class="fas fa-globe"></i> Open FastDL Web  
-                        </a>  
-                    </div>
-                </div>  
-
-                <!-- TikTok Downloader -->  
-                <div class="tool-card">  
-                    <div>
-                        <i class="fab fa-tiktok main-icon"></i>  
-                        <h3>TikTok Downloader</h3>  
-                        <p>Download TikTok videos in HD quality without watermark.</p>  
-                    </div>
-                    <a href="https://ssstik.io/" target="_blank" class="btn-action btn-secondary">  
-                        <i class="fas fa-globe"></i> Open Downloader  
-                    </a>  
-                </div>  
-
+            <div class="tools-grid" id="apps-container">  
+                <!-- Dynamic Apps Auto Load Here -->
             </div>  
         </div>  
 
@@ -615,22 +574,77 @@
 
     </div>
 
-    <!-- AI Voice Script -->
+    <!-- SCRIPT FOR VOICE & AUTOMATIC APPS LIST -->
     <script>
+        // ==========================================
+        // 📲 APPS LIST (نئی ایپس یہاں شامل کریں)
+        // ==========================================
+        const myApps = [
+            {
+                name: "Blackhole All Downloader",
+                desc: "Download videos from any social media platform directly from our server.",
+                icon: "fas fa-circle-down",
+                apk: "BlackHole.apk",
+                webLink: ""
+            },
+            {
+                name: "Instagram Downloader",
+                desc: "Download Reels, Photos & IGTV videos via App or FastDL online tool.",
+                icon: "fab fa-instagram",
+                apk: "Instagram.apk",
+                webLink: "https://fastdl.app/en4"
+            },
+            {
+                name: "TikTok Downloader",
+                desc: "Download TikTok videos in HD quality without watermark.",
+                icon: "fab fa-tiktok",
+                apk: "",
+                webLink: "https://ssstik.io/"
+            }
+        ];
+
+        // RENDER APPS AUTOMATICALLY
+        function renderApps() {
+            const container = document.getElementById('apps-container');
+            container.innerHTML = "";
+
+            myApps.forEach(app => {
+                let apkBtn = app.apk ? `<a href="${app.apk}" download class="btn-action"><i class="fas fa-download"></i> Download APK</a>` : "";
+                let webBtn = app.webLink ? `<a href="${app.webLink}" target="_blank" class="btn-action btn-secondary"><i class="fas fa-globe"></i> Open Web Tool</a>` : "";
+
+                const cardHTML = `
+                    <div class="tool-card">  
+                        <div>
+                            <i class="${app.icon} main-icon"></i>  
+                            <h3>${app.name}</h3>  
+                            <p>${app.desc}</p>  
+                        </div>
+                        <div>
+                            ${apkBtn}
+                            ${webBtn}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        // VOICE & WELCOME SCREEN
         function enterWebsite() {
-            // 1. Play AI Voice
             if ('speechSynthesis' in window) {
                 const speech = new SpeechSynthesisUtterance("Welcome to Sheraz Khan Website");
                 speech.lang = 'en-US';
                 speech.pitch = 1.0;
-                speech.rate = 0.9; // Slightly smooth voice speed
+                speech.rate = 0.9;
                 window.speechSynthesis.speak(speech);
             }
 
-            // 2. Hide Welcome Screen
             const welcomeScreen = document.getElementById('welcome-screen');
             welcomeScreen.classList.add('fade-out');
         }
+
+        // STARTUP
+        window.onload = renderApps;
     </script>
 
 </body>  
