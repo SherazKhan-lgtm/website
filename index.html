@@ -72,7 +72,12 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            animation: fadeOut 0.8s ease-in-out 2.8s forwards;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #welcome-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
             pointer-events: none;
         }
 
@@ -115,11 +120,35 @@
         .sub-loader {
             color: #8a99ad;
             margin-top: 10px;
+            margin-bottom: 25px;
             font-size: 0.85rem;
             letter-spacing: 4px;
             text-transform: uppercase;
             font-weight: 600;
             animation: pulseText 1.5s ease-in-out infinite alternate;
+        }
+
+        /* Enter Button for Voice Activation */
+        .btn-enter {
+            background: linear-gradient(45deg, #00f2fe, #7000ff);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-enter:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 35px rgba(0, 242, 254, 0.9);
         }
 
         @keyframes ringRotate {
@@ -145,13 +174,6 @@
         @keyframes pulseText {
             from { opacity: 0.4; letter-spacing: 4px; }
             to { opacity: 1; letter-spacing: 6px; color: var(--primary); }
-        }
-
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-                visibility: hidden;
-            }
         }
 
         /* --- CONTAINER & GLASSMORPHISM --- */
@@ -477,13 +499,17 @@
 </head>  
 <body>  
 
-    <!-- 1. WELCOME ANIMATION SCREEN (With Glowing Profile Image) -->  
+    <!-- 1. WELCOME ANIMATION SCREEN WITH VOICE BUTTON -->  
     <div id="welcome-screen">  
         <div class="welcome-avatar-wrapper">
             <img src="profile.jpg" alt="Sheraz Khan" class="welcome-avatar" onerror="this.src='https://via.placeholder.com/130'">
         </div>
         <div class="loader-brand">SHERAZ KHAN OFFICIAL</div>  
         <div class="sub-loader">Welcome To My World</div>  
+        
+        <button class="btn-enter" onclick="enterWebsite()">
+            <i class="fas fa-volume-high"></i> ENTER WEBSITE
+        </button>
     </div>  
 
     <div class="container">  
@@ -588,6 +614,24 @@
         </footer>  
 
     </div>
+
+    <!-- AI Voice Script -->
+    <script>
+        function enterWebsite() {
+            // 1. Play AI Voice
+            if ('speechSynthesis' in window) {
+                const speech = new SpeechSynthesisUtterance("Welcome to Sheraz Khan Website");
+                speech.lang = 'en-US';
+                speech.pitch = 1.0;
+                speech.rate = 0.9; // Slightly smooth voice speed
+                window.speechSynthesis.speak(speech);
+            }
+
+            // 2. Hide Welcome Screen
+            const welcomeScreen = document.getElementById('welcome-screen');
+            welcomeScreen.classList.add('fade-out');
+        }
+    </script>
 
 </body>  
 </html>
