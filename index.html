@@ -7,8 +7,10 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
     <style>
+        /* --- GLOBAL & RESET --- */
         * {
             margin: 0;
             padding: 0;
@@ -16,13 +18,48 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        body {
-            background-color: #080b12;
-            color: #ffffff;
-            overflow-x: hidden;
+        :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --accent: #7000ff;
+            --bg-dark: #05070d;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(0, 242, 254, 0.2);
+            --text-glow: 0 0 15px rgba(0, 242, 254, 0.6);
         }
 
-        /* --- 1. WELCOME ANIMATION SCREEN --- */
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Ambient Background Glows */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: -1;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        body::before {
+            top: -50px;
+            left: -50px;
+            background: #00f2fe;
+        }
+        body::after {
+            bottom: -50px;
+            right: -50px;
+            background: #7000ff;
+        }
+
+        /* --- 1. WELCOME ANIMATION SCREEN (2.8 Seconds) --- */
         #welcome-screen {
             position: fixed;
             top: 0;
@@ -36,30 +73,47 @@
             align-items: center;
             z-index: 9999;
             animation: fadeOut 0.8s ease-in-out 2.8s forwards;
+            pointer-events: none;
+        }
+
+        .loader-ring {
+            width: 100px;
+            height: 100px;
+            border: 3px solid rgba(0, 242, 254, 0.1);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.3);
         }
 
         .loader-brand {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 900;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            background: linear-gradient(45deg, #00f2fe, #4facfe, #00f2fe);
+            background: linear-gradient(45deg, #00f2fe, #ffffff, #00f2fe);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shine 2s linear infinite, scaleUp 1s ease-out;
+            animation: shine 2s linear infinite, scaleUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-align: center;
-            padding: 0 10px;
+            padding: 0 15px;
         }
 
         .sub-loader {
-            color: #00f2fe;
-            margin-top: 12px;
-            font-size: 0.9rem;
-            letter-spacing: 3px;
+            color: #8a99ad;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            opacity: 0.8;
             font-weight: 600;
+            animation: pulseText 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         @keyframes shine {
@@ -67,8 +121,13 @@
         }
 
         @keyframes scaleUp {
-            from { transform: scale(0.8); opacity: 0; }
+            from { transform: scale(0.7); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes pulseText {
+            from { opacity: 0.4; letter-spacing: 4px; }
+            to { opacity: 1; letter-spacing: 6px; color: var(--primary); }
         }
 
         @keyframes fadeOut {
@@ -82,33 +141,49 @@
         .container {
             max-width: 1050px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 25px 20px;
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(0, 242, 254, 0.15);
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
             border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             margin-bottom: 35px;
             overflow: hidden;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0, 242, 254, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 242, 254, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         /* --- PROFILE & COVER SECTION --- */
         .cover-photo {
             width: 100%;
             height: 260px;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background: linear-gradient(135deg, #0b1528, #112840, #09131d);
             background-size: cover;
             background-position: center;
             position: relative;
         }
 
+        .cover-photo::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(to top, rgba(5, 7, 13, 0.9), transparent);
+        }
+
         .profile-header {
             position: relative;
-            padding: 0 25px 30px 25px;
+            padding: 0 25px 35px 25px;
             text-align: center;
         }
 
@@ -116,7 +191,8 @@
             position: relative;
             width: 160px;
             height: 160px;
-            margin: -80px auto 15px auto;
+            margin: -80px auto 20px auto;
+            z-index: 2;
         }
 
         .profile-img {
@@ -124,24 +200,34 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid #00f2fe;
-            box-shadow: 0 0 25px rgba(0, 242, 254, 0.6);
+            border: 4px solid var(--primary);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.5), 0 0 10px rgba(0, 0, 0, 0.8);
             background: #080b12;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .profile-img-container:hover .profile-img {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 0 45px rgba(0, 242, 254, 0.8);
         }
 
         .profile-header h1 {
-            font-size: 2.3rem;
+            font-size: 2.4rem;
             font-weight: 800;
-            background: linear-gradient(to right, #fff, #00f2fe);
+            background: linear-gradient(to right, #ffffff, #00f2fe, #ffffff);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
         }
 
         .profile-header p {
-            color: #8a99ad;
+            color: #94a3b8;
             font-weight: 600;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
+            margin-bottom: 25px;
+            letter-spacing: 1.5px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
         }
 
         /* --- SOCIAL BUTTONS --- */
@@ -149,7 +235,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .btn-social {
@@ -157,258 +243,332 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            padding: 12px 18px;
-            border-radius: 14px;
+            padding: 13px 20px;
+            border-radius: 16px;
             text-decoration: none;
-            color: #fff;
+            color: #ffffff;
             font-weight: 600;
             font-size: 0.95rem;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-social::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-social:hover::before {
+            left: 100%;
         }
 
         .btn-social:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0, 242, 254, 0.25);
-            border-color: #00f2fe;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border-color: currentColor;
         }
 
         /* --- DOWNLOADERS & APPS --- */
         .section-title {
             font-size: 1.8rem;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-align: center;
             font-weight: 800;
             letter-spacing: 1px;
             background: linear-gradient(45deg, #00f2fe, #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            position: relative;
+            display: table;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            margin: 8px auto 0 auto;
+            border-radius: 2px;
         }
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-            padding: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 22px;
+            padding: 28px;
         }
 
         .tool-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 25px;
-            border-radius: 18px;
+            padding: 28px 22px;
+            border-radius: 20px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .tool-card:hover {
-            border-color: #00f2fe;
-            transform: translateY(-5px);
-            background: rgba(0, 242, 254, 0.03);
-            box-shadow: 0 10px 20px rgba(0, 242, 254, 0.15);
+            border-color: var(--primary);
+            transform: translateY(-6px);
+            background: rgba(0, 242, 254, 0.04);
+            box-shadow: 0 15px 30px rgba(0, 242, 254, 0.15);
         }
 
-        .tool-card i {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-            color: #00f2fe;
+        .tool-card i.main-icon {
+            font-size: 3rem;
+            margin-bottom: 18px;
+            color: var(--primary);
+            filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.4));
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover i.main-icon {
+            transform: scale(1.1);
         }
 
         .tool-card h3 {
             margin-bottom: 10px;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
+            font-weight: 700;
         }
 
         .tool-card p {
-            font-size: 0.85rem;
-            color: #8a99ad;
-            margin-bottom: 20px;
-            line-height: 1.4;
+            font-size: 0.88rem;
+            color: #94a3b8;
+            margin-bottom: 22px;
+            line-height: 1.5;
         }
 
         .btn-action {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             width: 100%;
-            padding: 12px;
+            padding: 12px 18px;
             border-radius: 12px;
             background: linear-gradient(45deg, #00f2fe, #4facfe);
-            color: #080b12;
+            color: #05070d;
             font-weight: 700;
+            font-size: 0.9rem;
             text-decoration: none;
-            transition: 0.3s ease;
+            transition: all 0.3s ease;
             margin-bottom: 8px;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-action:hover {
-            opacity: 0.95;
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.6);
+            transform: scale(1.02);
         }
 
         .btn-secondary {
             background: rgba(255, 255, 255, 0.06);
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.12);
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         /* --- GALLERY --- */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 18px;
             padding: 25px;
         }
 
         .gallery-item {
-            height: 220px;
-            border-radius: 16px;
-            background: #101522;
+            height: 240px;
+            border-radius: 18px;
+            background: #0d121f;
             overflow: hidden;
             border: 1px solid rgba(255,255,255,0.08);
             position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .gallery-item:hover img {
-            transform: scale(1.08);
+            transform: scale(1.1);
         }
 
         /* --- FOOTER & VISITOR COUNTER --- */
         footer {
             text-align: center;
-            padding: 25px;
-            color: #586578;
-            font-size: 0.85rem;
+            padding: 30px 20px;
+            color: #64748b;
+            font-size: 0.88rem;
             font-weight: 600;
         }
 
         .visitor-counter {
-            margin-top: 12px;
+            margin-top: 15px;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             background: rgba(0, 242, 254, 0.05);
-            border: 1px solid rgba(0, 242, 254, 0.2);
-            padding: 6px 15px;
-            border-radius: 20px;
-            color: #00f2fe;
-            font-size: 0.8rem;
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            padding: 8px 20px;
+            border-radius: 30px;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.1);
+        }
+
+        .visitor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00f2fe;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00f2fe;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
     </style>
-</head>
-<body>
+</head>  
+<body>  
 
-    <!-- 1. WELCOME ANIMATION -->
-    <div id="welcome-screen">
-        <div class="loader-brand">SHERAZ KHAN OFFICIAL</div>
-        <div class="sub-loader">Welcome To My World</div>
+    <!-- 1. WELCOME ANIMATION SCREEN (2.8 Seconds) -->  
+    <div id="welcome-screen">  
+        <div class="loader-ring"></div>
+        <div class="loader-brand">SHERAZ KHAN OFFICIAL</div>  
+        <div class="sub-loader">Welcome To My World</div>  
+    </div>  
+
+    <div class="container">  
+
+        <!-- 2. PROFILE & COVER CARD -->  
+        <div class="glass-card">  
+            <div class="cover-photo" style="background-image: url('cover.jpg');"></div>  
+              
+            <div class="profile-header">  
+                <div class="profile-img-container">  
+                    <img src="profile.jpg" alt="Sheraz Khan Official" class="profile-img" onerror="this.src='https://via.placeholder.com/160'">  
+                </div>  
+                <h1>Sheraz Khan Official</h1>  
+                <p>Digital Creator & Media Hub</p>  
+
+                <!-- Social Links -->  
+                <div class="social-grid">  
+                    <a href="https://wa.me/923441616216" target="_blank" class="btn-social" style="color: #25D366;">  
+                        <i class="fab fa-whatsapp"></i> WhatsApp  
+                    </a>  
+                    <a href="mailto:alone.heart706@gmail.com" class="btn-social" style="color: #ea4335;">  
+                        <i class="fas fa-envelope"></i> Email  
+                    </a>  
+                    <a href="https://www.tiktok.com/@mr__sheraz1" target="_blank" class="btn-social" style="color: #ff0050;">  
+                        <i class="fab fa-tiktok"></i> TikTok  
+                    </a>  
+                    <a href="https://www.facebook.com/its.sharry.Khan" target="_blank" class="btn-social" style="color: #1877F2;">  
+                        <i class="fab fa-facebook"></i> Facebook  
+                    </a>  
+                    <a href="https://www.youtube.com/@sharrykhan3527" target="_blank" class="btn-social" style="color: #FF0000;">  
+                        <i class="fab fa-youtube"></i> YouTube  
+                    </a>  
+                </div>  
+            </div>  
+        </div>  
+
+        <!-- 3. DOWNLOADERS SECTION -->  
+        <h2 class="section-title">Video Downloaders & Apps</h2>  
+        <div class="glass-card">  
+            <div class="tools-grid">  
+                  
+                <!-- Blackhole App Direct Download -->  
+                <div class="tool-card">  
+                    <div>
+                        <i class="fas fa-circle-down main-icon"></i>  
+                        <h3>Blackhole All Downloader</h3>  
+                        <p>Download videos from any social media platform directly from our server.</p>  
+                    </div>
+                    <a href="BlackHole.apk" download class="btn-action">  
+                        <i class="fas fa-download"></i> Download APK  
+                    </a>  
+                </div>  
+
+                <!-- Instagram Video Downloader App -->  
+                <div class="tool-card">  
+                    <div>
+                        <i class="fab fa-instagram main-icon"></i>  
+                        <h3>Instagram Video Downloader</h3>  
+                        <p>Download Reels, Photos & IGTV videos via App or FastDL online tool.</p>  
+                    </div>
+                    <div>
+                        <a href="Instagram.apk" download class="btn-action">  
+                            <i class="fas fa-download"></i> Download App  
+                        </a>  
+                        <a href="https://fastdl.app/en4" target="_blank" class="btn-action btn-secondary">  
+                            <i class="fas fa-globe"></i> Open FastDL Web  
+                        </a>  
+                    </div>
+                </div>  
+
+                <!-- TikTok Downloader -->  
+                <div class="tool-card">  
+                    <div>
+                        <i class="fab fa-tiktok main-icon"></i>  
+                        <h3>TikTok Downloader</h3>  
+                        <p>Download TikTok videos in HD quality without watermark.</p>  
+                    </div>
+                    <a href="https://ssstik.io/" target="_blank" class="btn-action btn-secondary">  
+                        <i class="fas fa-globe"></i> Open Downloader  
+                    </a>  
+                </div>  
+
+            </div>  
+        </div>  
+
+        <!-- 4. GALLERY SECTION -->  
+        <h2 class="section-title">Featured Gallery</h2>  
+        <div class="glass-card">  
+            <div class="gallery-grid">  
+                <div class="gallery-item"><img src="pic1.jpg" alt="Sheraz Khan" onerror="this.src='https://via.placeholder.com/300'"></div>  
+                <div class="gallery-item"><img src="pic2.jpg" alt="Sheraz Khan" onerror="this.src='https://via.placeholder.com/300'"></div>  
+                <div class="gallery-item"><img src="pic3.jpg" alt="Sheraz Khan" onerror="this.src='https://via.placeholder.com/300'"></div>  
+            </div>  
+        </div>  
+
+        <!-- 5. FOOTER & VISITOR COUNTER -->  
+        <footer>  
+            <p>&copy; 2026 Sheraz Khan Official. All rights reserved.</p>  
+            <div class="visitor-counter">  
+                <span class="visitor-dot"></span> <i class="fas fa-eye"></i> Visitors: <span id="visitor-count">1,482</span>+  
+            </div>  
+        </footer>  
+
     </div>
 
-    <div class="container">
-
-        <!-- 2. PROFILE & COVER CARD -->
-        <div class="glass-card">
-            <div class="cover-photo" style="background-image: url('cover.jpg');"></div>
-            
-            <div class="profile-header">
-                <div class="profile-img-container">
-                    <img src="profile.jpg" alt="Sheraz Khan Official" class="profile-img" onerror="this.src='https://via.placeholder.com/160'">
-                </div>
-                <h1>Sheraz Khan Official</h1>
-                <p>Digital Creator & Media Hub</p>
-
-                <!-- Social Links -->
-                <div class="social-grid">
-                    <a href="https://wa.me/923441616216" target="_blank" class="btn-social" style="color: #25D366;">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
-                    <a href="mailto:alone.heart706@gmail.com" class="btn-social" style="color: #ea4335;">
-                        <i class="fas fa-envelope"></i> Email
-                    </a>
-                    <a href="https://www.tiktok.com/@mr__sheraz1" target="_blank" class="btn-social" style="color: #ff0050;">
-                        <i class="fab fa-tiktok"></i> TikTok
-                    </a>
-                    <a href="https://www.facebook.com/its.sharry.Khan" target="_blank" class="btn-social" style="color: #1877F2;">
-                        <i class="fab fa-facebook"></i> Facebook
-                    </a>
-                    <a href="https://www.youtube.com/@sharrykhan3527" target="_blank" class="btn-social" style="color: #FF0000;">
-                        <i class="fab fa-youtube"></i> YouTube
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. DOWNLOADERS SECTION -->
-        <h2 class="section-title">Video Downloaders & Apps</h2>
-        <div class="glass-card">
-            <div class="tools-grid">
-                
-                <!-- Blackhole App Direct Download -->
-                <div class="tool-card">
-                    <i class="fas fa-circle-down"></i>
-                    <h3>Blackhole All Downloader</h3>
-                    <p>Download videos from any social media platform directly from our server.</p>
-                    <a href="BlackHole.apk" download class="btn-action">
-                        <i class="fas fa-download"></i> Download APK
-                    </a>
-                </div>
-
-                <!-- Instagram Video Downloader App -->
-                <div class="tool-card">
-                    <i class="fab fa-instagram"></i>
-                    <h3>Instagram Video Downloader</h3>
-                    <p>Download Reels, Photos & IGTV videos via App or FastDL online tool.</p>
-                    <a href="Instagram.apk" download class="btn-action">
-                        <i class="fas fa-download"></i> Download App
-                    </a>
-                    <a href="https://fastdl.app/en4" target="_blank" class="btn-action btn-secondary">
-                        <i class="fas fa-globe"></i> Open FastDL Web
-                    </a>
-                </div>
-
-                <!-- TikTok Downloader -->
-                <div class="tool-card">
-                    <i class="fab fa-tiktok"></i>
-                    <h3>TikTok Downloader</h3>
-                    <p>Download TikTok videos in HD quality without watermark.</p>
-                    <a href="https://ssstik.io/" target="_blank" class="btn-action btn-secondary">
-                        <i class="fas fa-globe"></i> Open Downloader
-                    </a>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- 4. GALLERY SECTION -->
-        <h2 class="section-title">Featured Gallery</h2>
-        <div class="glass-card">
-            <div class="gallery-grid">
-                <div class="gallery-item"><img src="pic1.jpg" alt="Sheraz Khan" onerror="this.src='https://via.placeholder.com/300'"></div>
-                <div class="gallery-item"><img src="pic2.jpg" alt="Sheraz Khan" onerror="this.src='https://via.placeholder.com/300'"></div>
-                <div class="gallery-item"><img src="pic3.jpg" alt="Sheraz Khan" onerror="this.src='https://via.placeholder.com/300'"></div>
-            </div>
-        </div>
-
-        <!-- 5. FOOTER & VISITOR COUNTER -->
-        <footer>
-            <p>&copy; 2026 Sheraz Khan Official. All rights reserved.</p>
-            <div class="visitor-counter">
-                <i class="fas fa-eye"></i> Visitors: <span id="visitor-count">1,482</span>+
-            </div>
-        </footer>
-
-    </div>
-
-</body>
+</body>  
 </html>
